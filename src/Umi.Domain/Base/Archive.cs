@@ -10,9 +10,18 @@ namespace Umi.Base
 {
     public class Archive: FullAuditedAggregateRoot<Guid>
     {
+        [Required]
+        [StringLength(UmiConsts.CodeLength)]
         public required string Code { get; set; }
+
+        [Required]
+        [StringLength(UmiConsts.NameLength)]
         public required string Name { get; set; }
+
+        [StringLength(UmiConsts.CodeLength)]
         public string? AidCode { get; set; }
+
+        [StringLength(UmiConsts.TextLength)]
         public string? Description { get; set; }
 
     }

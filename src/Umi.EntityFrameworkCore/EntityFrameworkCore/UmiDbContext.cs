@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Umi.Shop;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -53,6 +55,10 @@ public class UmiDbContext :
 
     #endregion
 
+    #region "Shops"
+    public DbSet<Shops> Shops { get; set; }
+    #endregion
+
     public UmiDbContext(DbContextOptions<UmiDbContext> options)
         : base(options)
     {
@@ -82,5 +88,14 @@ public class UmiDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+        #region "Shops"
+        builder.Entity<Shops>(s => {
+            s.ToTable(UmiConsts.DbTablePrefix + "Shops", UmiConsts.DbSchema);
+            s.ConfigureByConvention();
+            s.OwnsOne(x => x.Contacts);
+            s.OwnsOne(x => x.Address);
+        });
+        #endregion
     }
 }
