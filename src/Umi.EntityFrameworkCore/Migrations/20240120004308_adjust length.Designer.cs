@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Umi.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Umi.Migrations
 {
     [DbContext(typeof(UmiDbContext))]
-    partial class UmiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240120004308_adjust length")]
+    partial class adjustlength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1837,7 +1840,7 @@ namespace Umi.Migrations
 
             modelBuilder.Entity("Umi.Shop.Shops", b =>
                 {
-                    b.OwnsOne("Umi.Shop.Shops.Address#Umi.VO.Address", "Address", b1 =>
+                    b.OwnsOne("Umi.VO.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("ShopsId")
                                 .HasColumnType("uniqueidentifier");
@@ -1869,13 +1872,13 @@ namespace Umi.Migrations
 
                             b1.HasKey("ShopsId");
 
-                            b1.ToTable("UmiShops", (string)null);
+                            b1.ToTable("UmiShops");
 
                             b1.WithOwner()
                                 .HasForeignKey("ShopsId");
                         });
 
-                    b.OwnsOne("Umi.Shop.Shops.Contacts#Umi.VO.Contacts", "Contacts", b1 =>
+                    b.OwnsOne("Umi.VO.Contacts", "Contacts", b1 =>
                         {
                             b1.Property<Guid>("ShopsId")
                                 .HasColumnType("uniqueidentifier");
@@ -1897,7 +1900,7 @@ namespace Umi.Migrations
 
                             b1.HasKey("ShopsId");
 
-                            b1.ToTable("UmiShops", (string)null);
+                            b1.ToTable("UmiShops");
 
                             b1.WithOwner()
                                 .HasForeignKey("ShopsId");

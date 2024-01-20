@@ -39,6 +39,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.Auditing;
 
 namespace Umi.Web;
 
@@ -111,6 +112,7 @@ public class UmiWebModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+        ConfigureAuditing();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -141,6 +143,13 @@ public class UmiWebModule : AbpModule
                     bundle.AddFiles("/global-styles.css");
                 }
             );
+        });
+    }
+
+    private void ConfigureAuditing()
+    {
+        Configure<AbpAuditingOptions>(options => {
+            options.EntityHistorySelectors.AddAllEntities();
         });
     }
 
